@@ -1,6 +1,6 @@
 @ECHO OFF
 :REM to install, run this in c:\batch
-:REM curl -o w.cmd https://thr27.github.io/la-cuna-icu-bootstrap/w.cmd
+:REM curl -o w.cmd https://robertt-smg.github.io/ansible-bootstrap/w.cmd
 SETLOCAL
 :# Bootstrap windows ansible
 if (%1) == () echo Usage: %0 "SETUP"
@@ -77,7 +77,7 @@ if exist %file% (
 if (%1) == (PS7_INSTALL) goto :eof
 
 :WSUS_UPDATE
-set url=https://thr27.github.io/la-cuna-icu-bootstrap/wsus_update.vbs
+set url=https://robertt-smg.github.io/ansible-bootstrap/wsus_update.vbs
 set file=c:\batch\wsus_update.vbs
 
 powershell.exe -ExecutionPolicy ByPass -File %downloadScript% %url% %file%

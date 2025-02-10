@@ -1,6 +1,6 @@
 #!/bin/bash
 # You can bootstrap a server with
-# wget https://thr27.github.io/la-cuna-icu-bootstrap/b.sh && bash b.sh
+# wget https://robertt-smg.github.io/ansible-bootstrap/b.sh && bash b.sh
 
 SERVERNAME=${SERVERNAME:-server1}
 DOMAIN=${DOMAIN:-la-cuna.icu}
@@ -10,7 +10,7 @@ if [ -f $SCRIPTPATH/bootstrap.sh ]; then
 else
   if [ ! -f /tmp/bootstrap.sh ]; then
     echo "Bootstrap script not found. Downloading..."
-    wget https://thr27.github.io/la-cuna-icu-bootstrap/bootstrap.sh -O /tmp/bootstrap.sh
+    wget https://robertt-smg.github.io/ansible-bootstrap/bootstrap.sh -O /tmp/bootstrap.sh
   fi
   source /tmp/bootstrap.sh
 fi
