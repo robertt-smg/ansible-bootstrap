@@ -43,7 +43,7 @@ function add_ansible_user() {
     chmod 440 /etc/sudoers.d/ansible
     mkdir -p -m 700 /home/ansible/.ssh
     #echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFsW/fNKMjMQjkYcQOqwD14UItgMBGIX7HHpP2YTvQkI ansible" > /home/ansible/.ssh/authorized_keys
-    wget https://thr27.github.io/la-cuna-icu-bootstrap/authorized_keys -O /home/ansible/.ssh/authorized_keys
+    wget https://robertt-smg.github.io/ansible-bootstrap/authorized_keys -O /home/ansible/.ssh/authorized_keys
     chmod 600 /home/ansible/.ssh/authorized_keys
     chown -R ansible:ansible /home/ansible/.ssh
 
