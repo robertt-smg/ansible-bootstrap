@@ -57,7 +57,7 @@ function DownloadFile([string]$url, [string]$file) {
 if (%1) == (INST_WINRM) goto :INST_WINRM
 if (%1) == (PS7_INSTALL) goto :PS7_INSTALL
 if (%1) == (WSUS_UPDATE) goto :WSUS_UPDATE
-
+if (%1) == (DEFENDER_OFF) goto :DEFENDER_OFF
 :INST_WINRM
 powershell.exe -ExecutionPolicy ByPass -File %downloadScript% %url% %file%
 
@@ -75,6 +75,14 @@ if exist %file% (
     msiexec.exe /package %file% /quiet ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=1 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
 )
 if (%1) == (PS7_INSTALL) goto :eof
+
+:DEFENDER_OFF
+rem Disable Real-Ttime Protection
+powershell.exe -ExecutionPolicy ByPass "Set-MpPreference -DisableRealtimeMonitoring $true"
+
+rem Enable Real-Time Protection
+powershell.exe -ExecutionPolicy ByPass "Set-MpPreference -DisableRealtimeMonitoring $false"
+if (%1) == (DEFENDER_OFF) goto :eof
 
 :WSUS_UPDATE
 set url=https://robertt-smg.github.io/ansible-bootstrap/wsus_update.vbs
