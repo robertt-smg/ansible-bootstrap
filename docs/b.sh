@@ -2,8 +2,8 @@
 # You can bootstrap a server with
 # wget https://robertt-smg.github.io/ansible-bootstrap/b.sh && bash b.sh
 
-SERVERNAME=${SERVERNAME:-server1}
-DOMAIN=${DOMAIN:-la-cuna.icu}
+SERVERNAME=${SERVERNAME:-$(hostname)}
+DOMAIN=${DOMAIN:-smg-air-conaos.com}
 
 if [ -f $SCRIPTPATH/bootstrap.sh ]; then
   source $SCRIPTPATH/bootstrap.sh
