@@ -5,6 +5,7 @@ SETLOCAL
 :# Start airQuest Terminal Session
 
 if not exist "C:\tmp\airQuest" mkdir "C:\tmp\airQuest"
+curl -o C:\tmp\airQuest\airquest.ico https://robertt-smg.github.io/ansible-bootstrap/airquest.ico
 
 rem Definition of heredoc macro
 setlocal DisableDelayedExpansion
