@@ -94,21 +94,10 @@ username:s:!sUser!
 setlocal enabledelayedexpansion
 
 set "TEMPFILE=sid.tmp"
-set "VBSCRIPT=getsid.vbs"
 
-rem VBScript zum Ermitteln der SID schreiben
->"%VBSCRIPT%" echo Set objArgs = WScript.Arguments
->>"%VBSCRIPT%" echo strUser = objArgs(0)
->>"%VBSCRIPT%" echo Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
->>"%VBSCRIPT%" echo Set colItems = objWMIService.ExecQuery("Select * from Win32_UserAccount where Name='" ^& strUser ^& "'")
->>"%VBSCRIPT%" echo For Each objItem in colItems
->>"%VBSCRIPT%" echo     WScript.Echo objItem.SID
->>"%VBSCRIPT%" echo Next
-
-
+rem SID mit whoami /user ermitteln
 set "SID="
-
-for /f "delims=" %%S in ('cscript //nologo "%VBSCRIPT%" %sUser%') do (
+for /f "tokens=2" %%S in ('C:\Windows\System32\whoami.exe /user /nh') do (
    set "SID=%%S"
 )
 
@@ -139,7 +128,6 @@ C:\Windows\System32\timeout.exe /t 30
 cmdkey /delete:TERMSRV/%sServer%
 
 del "%TEMPFILE%"
-del "%VBSCRIPT%"
 del "%rdpFile%"
 
 :rem ####################################################################################################### EOF
