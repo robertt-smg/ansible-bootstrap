@@ -32,62 +32,66 @@ if [%sUser%] == []  (
 )
 
 %heredoc% :rdp_file %rdpFile%
-redirectclipboard:i:1
-redirectposdevices:i:0
-redirectprinters:i:1
-redirectcomports:i:1
-redirectsmartcards:i:0
-drivestoredirect:s:
-session bpp:i:32
-prompt for credentials on client:i:0
-span monitors:i:0
-use multimon:i:1
-remoteapplicationmode:i:1
-server port:i:3389
-allow font smoothing:i:0
-promptcredentialonce:i:1
-authentication level:i:2
-gatewayusagemethod:i:2
-gatewayprofileusagemethod:i:0
-gatewaycredentialssource:i:0
-full address:s:!sServer!
-alternate shell:s:||run_airquest
-remoteapplicationprogram:s:||run_airquest
-gatewayhostname:s:
-remoteapplicationname:s:run_airquest.cmd
-remoteapplicationcmdline:s:
-compression:i:1
-keyboardhook:i:2
-audiocapturemode:i:0
-videoplaybackmode:i:1
-connection type:i:2
-displayconnectionbar:i:1
-disable wallpaper:i:1
 allow desktop composition:i:0
+allow font smoothing:i:0
+alternate shell:s:||run_airquest
+audiocapturemode:i:0
+audiomode:i:0
+authentication level:i:2
+autoreconnection enabled:i:1
+bandwidthautodetect:i:0
+bitmapcachepersistenable:i:1
+compression:i:1
+connection type:i:2
+desktopheight:i:600
+desktopwidth:i:800
+disable cursor setting:i:0
 disable full window drag:i:1
 disable menu anims:i:1
 disable themes:i:1
-disable cursor setting:i:0
-bitmapcachepersistenable:i:1
-audiomode:i:0
-redirectdirectx:i:1
-autoreconnection enabled:i:1
-prompt for credentials:i:0
-negotiate security layer:i:1
-remoteapplicationicon:s:
-shell working directory:s:d:\data
-use redirection server name:i:0
-screen mode id:i:2
-winposstr:s:0,3,0,0,800,600
+disable wallpaper:i:1
+displayconnectionbar:i:1
+drivestoredirect:s:*
+enablerdsaadauth:i:0
 enableworkspacereconnect:i:0
+full address:s:!sServer!
 gatewaybrokeringtype:i:0
-rdgiskdcproxy:i:0
+gatewaycredentialssource:i:0
+gatewayhostname:s:
+gatewayprofileusagemethod:i:0
+gatewayusagemethod:i:2
 kdcproxyname:s:
-desktopwidth:i:800
-desktopheight:i:600
+keyboardhook:i:2
+negotiate security layer:i:1
 networkautodetect:i:0
-bandwidthautodetect:i:0
+prompt for credentials on client:i:0
+prompt for credentials:i:0
+promptcredentialonce:i:1
+rdgiskdcproxy:i:0
+redirectclipboard:i:1
+redirectcomports:i:1
+redirectdirectx:i:1
+redirectlocation:i:0
+redirectposdevices:i:1
+redirectprinters:i:1
+redirectsmartcards:i:0
+redirectwebauthn:i:1
+remoteapplicationcmdline:s:
+remoteapplicationicon:s:
+remoteapplicationmode:i:1
+remoteapplicationname:s:run_airquest.cmd
+remoteapplicationprogram:s:||run_airquest
+remoteappmousemoveinject:i:1
+screen mode id:i:2
+server port:i:3389
+session bpp:i:32
+shell working directory:s:d:\data
+span monitors:i:0
+use multimon:i:1
+use redirection server name:i:0
 username:s:!sUser!
+videoplaybackmode:i:1
+winposstr:s:0,3,0,0,800,600
 :rdp_file
 
 :rem type "%rdpFile%" 
