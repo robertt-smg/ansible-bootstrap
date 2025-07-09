@@ -3,13 +3,24 @@
 Dim SRV_NAME
 SRV_NAME = "dc1.INTRANET.SCHMETTERLING.DE" 
 
+' get_sid.vbs
+If WScript.Arguments.Count = 0 Then
+    WScript.Echo "No name provided"
+    WScript.Quit 1
+End If
+
+Dim queryName
+queryName = WScript.Arguments(0)
+
+' Now use queryName in your LDAP or WMI query
+
 Dim result
-Set result = SearchDistinguishedName("bianca gerstl")
+Set result = SearchDistinguishedName(queryName)
 If Not result Is Nothing Then
-    WScript.Echo "sAMAccountName: " & result("sAMAccountName")
-    WScript.Echo "objectSID: " & result("objectSID")
+    WScript.Echo "set SAMACCOUNTNAME=" & result("sAMAccountName")
+    WScript.Echo "set SID=" & result("objectSID")
 Else
-    WScript.Echo "User not found in AD."
+    WScript.Echo "rem User not found in AD."
 End If
 
 

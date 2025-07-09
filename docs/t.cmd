@@ -4,8 +4,51 @@
 SETLOCAL
 :# Start airQuest Terminal Session
 
-if not exist "C:\tmp\airQuest" mkdir "C:\tmp\airQuest"
+if not exist "C:\tmp\airQuest" mkdir -p "C:\tmp\airQuest"
 curl -o C:\tmp\airQuest\airquest.ico https://robertt-smg.github.io/ansible-bootstrap/airquest.ico
+curl -o C:\tmp\airQuest\get_sid.vbs https://robertt-smg.github.io/ansible-bootstrap/get_sid.vbs
+
+
+setlocal enabledelayedexpansion
+
+set "TEMPFILE=sid.tmp"
+
+set "USER=%*"
+if ["%USER%"] == [""]  (
+   echo Using default user %USERNAME% as argument
+   set "USER=%USERNAME%"
+) else (
+   echo Using passed user as argument %USER%
+   
+)
+
+rem SID und Username mit get_sid.vbs ermitteln
+set "SID="
+set "SAMACCOUNTNAME="
+rem SID und Username mit get_sid.vbs ermitteln
+for /f "delims=" %%A in ('cscript //nologo C:\tmp\airQuest\get_sid.vbs "%USER%"') do call %%A
+
+if not defined SAMACCOUNTNAME (
+    msg * User: '%USER%' wurde nicht gefunden, SAMACCOUNTNAME konnte nicht ermittelt werden
+    goto :eof
+)
+
+if not defined SID (
+    msg * User: '%USER%' wurde nicht gefunden, SID konnte nicht ermittelt werden
+    goto :eof
+)
+
+if defined SID (
+   echo %SID%> "%TEMPFILE%"
+   set "HASH="
+   for /f "skip=1 tokens=1" %%H in ('certutil -hashfile "%TEMPFILE%" MD5') do (
+      if not defined HASH ( 
+         set "HASH=%%H"
+      )
+   )
+   set "sPass=!HASH!@SMG"
+   
+) 
 
 rem Definition of heredoc macro
 setlocal DisableDelayedExpansion
@@ -22,14 +65,12 @@ set heredoc=for %%n in (1 2) do if %%n==2 (%\n%
     ) else setlocal EnableDelayedExpansion ^& set argv=
 
 set rdpFile="%TEMP%\airQuest.rdp"
-set "sServer=%1"
+set "sServer=%TS_SERVER%"
 if [%sServer%] == []  (
     set "sServer=t01.smg-air-conso.com"
 )
-set sUser=%2
-if [%sUser%] == []  (
-    set "sUser=%USERNAME%"
-)
+set "sUser=%SAMACCOUNTNAME%"
+
 
 %heredoc% :rdp_file %rdpFile%
 allow desktop composition:i:0
@@ -89,44 +130,17 @@ shell working directory:s:d:\data
 span monitors:i:0
 use multimon:i:1
 use redirection server name:i:0
-username:s:!sUser!
+username:s:!SAMACCOUNTNAME!
 videoplaybackmode:i:1
 winposstr:s:0,3,0,0,800,600
 :rdp_file
 
 :rem type "%rdpFile%" 
 
-setlocal enabledelayedexpansion
-
-set "TEMPFILE=sid.tmp"
-
-rem SID mit whoami /user ermitteln
-set "SID="
-for /f "tokens=2" %%S in ('C:\Windows\System32\whoami.exe /user /nh') do (
-   set "SID=%%S"
-)
-
-if defined SID (
-   echo %SID%> "%TEMPFILE%"
-   echo %TEMPFILE%
-type "%TEMPFILE%"
-    set "HASH="
-   for /f "skip=1 tokens=1" %%H in ('certutil -hashfile "%TEMPFILE%" MD5') do (
-      if not defined HASH ( 
-         set "HASH=%%H"
-      )
-   )
-   set "sPass=!HASH!@SMG"
-   
-) else (
-   echo %%U,SID not found ...
-   msg * "Benutzer wurde nicht gefunden ..."
-   goto :eof
-)
 
 :: Add a new connection definition method to the vault
 cmdkey /generic:TERMSRV/%sServer% /user:%sUser% /pass:%sPass%
-
+echo Benutzer: %SAMACCOUNTNAME% (%SID%) wird verbunden .... bitte warten ...
 start mstsc %rdpFile%  
 
 C:\Windows\System32\timeout.exe /t 30
