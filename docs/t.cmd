@@ -28,6 +28,16 @@ set "SAMACCOUNTNAME="
 rem SID und Username mit get_sid.vbs ermitteln
 for /f "delims=" %%A in ('cscript //nologo C:\tmp\airQuest\get_sid.vbs "%USER%"') do call %%A
 
+if not defined SID (
+   set "TEMPFILE=sid.tmp"
+
+   echo SID mit whoami /user ermitteln
+   set "SID="
+   for /f "tokens=2" %%S in ('C:\Windows\System32\whoami.exe /user /nh') do (
+      set "SID=%%S"
+      set "SAMACCOUNTNAME=%USERNAME%"
+   )
+)
 if not defined SAMACCOUNTNAME (
     msg * User: '%USER%' wurde nicht gefunden, SAMACCOUNTNAME konnte nicht ermittelt werden
     goto :eof
@@ -141,6 +151,8 @@ winposstr:s:0,3,0,0,800,600
 :: Add a new connection definition method to the vault
 cmdkey /generic:TERMSRV/%sServer% /user:%sUser% /pass:%sPass%
 echo Benutzer: %SAMACCOUNTNAME% (%SID%) wird verbunden .... bitte warten ...
+
+:type %rdpFile%  
 start mstsc %rdpFile%  
 
 C:\Windows\System32\timeout.exe /t 30
