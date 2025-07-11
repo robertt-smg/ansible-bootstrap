@@ -179,7 +179,7 @@ cmdkey /generic:TERMSRV/%sServer% /user:%sUser% /pass:%sPass%
 echo Benutzer: %SAMACCOUNTNAME% (%SID%) wird verbunden .... bitte warten ...
 
 :type %rdpFile%  
-:start mstsc %rdpFile%  
+start mstsc %rdpFile%  
 
 C:\Windows\System32\timeout.exe /t 30
 cmdkey /delete:TERMSRV/%sServer%
