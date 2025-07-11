@@ -34,9 +34,9 @@ if not defined SID (
 
    echo SID mit whoami /user ermitteln
    set "SID="
-   for /f "tokens=2" %%S in ('C:\Windows\System32\whoami.exe /user /nh') do (
-      set "SID=%%S"
-      set "SAMACCOUNTNAME=%USERNAME%"
+   for /f "tokens=1,2 delims=," %%A in ('C:\Windows\System32\whoami.exe /user /nh /FO csv') do (
+      set "SAMACCOUNTNAME=%%~A"
+      set "SID=%%~B"
    )
 )
 if not [%LOGONSERVER%] == [\\DC1]  (
