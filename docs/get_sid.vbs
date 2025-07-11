@@ -1,7 +1,7 @@
 ' VBScript to retrieve the DisplayName of a user from Active Directory
 
 Dim SRV_NAME
-SRV_NAME = "dc1.INTRANET.SCHMETTERLING.DE" 
+SRV_NAME = "LDAP://dc1.INTRANET.SCHMETTERLING.DE" 
 
 ' get_sid.vbs
 If WScript.Arguments.Count = 0 Then
@@ -26,8 +26,11 @@ End If
 
 Function SearchDistinguishedName(ByVal vSAN)
     Dim oRootDSE, oConnection, oCommand, oRecordSet, dict
-    Set oRootDSE = GetObject("LDAP://rootDSE")
+    ' Set oRootDSE = GetObject("LDAP://rootDSE")
+    Set oRootDSE = GetObject(SRV_NAME)
     
+    WScript.Echo "set oRootDSE=" & oRootDSE.Get("defaultNamingContext")
+
     Set oConnection = CreateObject("ADODB.Connection")
     oConnection.Open "Provider=ADsDSOObject;"
     

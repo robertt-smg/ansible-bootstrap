@@ -21,12 +21,13 @@ if ["%USER%"] == [""]  (
    echo Using passed user as argument %USER%
    
 )
-
-rem SID und Username mit get_sid.vbs ermitteln
-set "SID="
-set "SAMACCOUNTNAME="
-rem SID und Username mit get_sid.vbs ermitteln
-for /f "delims=" %%A in ('cscript //nologo C:\tmp\airQuest\get_sid.vbs "%USER%"') do call %%A
+if [%LOGONSERVER%] == [\\DC1]  (
+   rem SID und Username mit get_sid.vbs ermitteln
+   set "SID="
+   set "SAMACCOUNTNAME="
+   rem SID und Username mit get_sid.vbs ermitteln
+   for /f "delims=" %%A in ('cscript //nologo C:\tmp\airQuest\get_sid.vbs "%USER%"') do call %%A
+) 
 
 if not defined SID (
    set "TEMPFILE=sid.tmp"
@@ -38,6 +39,23 @@ if not defined SID (
       set "SAMACCOUNTNAME=%USERNAME%"
    )
 )
+if not [%LOGONSERVER%] == [\\DC1]  (
+    rem Set SAMACCOUNTNAME based on SID static table
+    if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-13875" set "SAMACCOUNTNAME=robertt"
+    if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-14736" set "SAMACCOUNTNAME=alexandrarab"
+    if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-14743" set "SAMACCOUNTNAME=guidoa"
+    if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-13878" set "SAMACCOUNTNAME=sandrakr"
+    if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-14735" set "SAMACCOUNTNAME=patrickde"
+    if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-13194" set "SAMACCOUNTNAME=stefankr"
+    if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-13874" set "SAMACCOUNTNAME=sarahb"
+    if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-12136" set "SAMACCOUNTNAME=malter"
+    if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-14643" set "SAMACCOUNTNAME=Biancag"
+    if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-11201" set "SAMACCOUNTNAME=manuelat"
+    if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-13898" set "SAMACCOUNTNAME=markussc"
+    if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-13915" set "SAMACCOUNTNAME=annad"
+    if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-14771" set "SAMACCOUNTNAME=hannelorese"
+)
+
 if not defined SAMACCOUNTNAME (
     msg * User: '%USER%' wurde nicht gefunden, SAMACCOUNTNAME konnte nicht ermittelt werden
     goto :eof
