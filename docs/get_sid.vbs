@@ -26,9 +26,8 @@ End If
 
 Function SearchDistinguishedName(ByVal vSAN)
     Dim oRootDSE, oConnection, oCommand, oRecordSet, dict
-    ' Set oRootDSE = GetObject("LDAP://rootDSE")
-    Set oRootDSE = GetObject(SRV_NAME)
-    
+    Set oRootDSE = GetObject("LDAP://rootDSE")
+        
     WScript.Echo "set oRootDSE=" & oRootDSE.Get("defaultNamingContext")
 
     Set oConnection = CreateObject("ADODB.Connection")

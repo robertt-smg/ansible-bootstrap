@@ -40,6 +40,7 @@ if not defined SID (
    )
 )
 if not [%LOGONSERVER%] == [\\DC1]  (
+   echo Not in Domain
     rem Set SAMACCOUNTNAME based on SID static table
     if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-13875" set "SAMACCOUNTNAME=robertt"
     if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-14736" set "SAMACCOUNTNAME=alexandrarab"
@@ -178,7 +179,7 @@ cmdkey /generic:TERMSRV/%sServer% /user:%sUser% /pass:%sPass%
 echo Benutzer: %SAMACCOUNTNAME% (%SID%) wird verbunden .... bitte warten ...
 
 :type %rdpFile%  
-start mstsc %rdpFile%  
+:start mstsc %rdpFile%  
 
 C:\Windows\System32\timeout.exe /t 30
 cmdkey /delete:TERMSRV/%sServer%
