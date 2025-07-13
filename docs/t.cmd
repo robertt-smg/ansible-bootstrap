@@ -167,6 +167,7 @@ span monitors:i:0
 use multimon:i:1
 use redirection server name:i:0
 username:s:!SAMACCOUNTNAME!
+domain:s:SMG-AIRCONSO.COM
 videoplaybackmode:i:1
 winposstr:s:0,3,0,0,800,600
 :rdp_file
