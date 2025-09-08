@@ -51,10 +51,6 @@ if not [%LOGONSERVER%] == [\\DC1]  (
       set "SAMACCOUNTNAME=sandrakr"
     )
     if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-14735" set "SAMACCOUNTNAME=patrickde"
-    if "%SID%"=="S-1-5-21-2510654446-525309667-2785132758-1002" ( # lokales Konto
-      set "SID=S-1-5-21-1214440339-1383384898-1060284298-14735" 
-      set "SAMACCOUNTNAME=patrickde"
-    )
     if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-13194" set "SAMACCOUNTNAME=stefankr"
     if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-13874" set "SAMACCOUNTNAME=sarahb"
     if "%SID%"=="S-1-5-21-1214440339-1383384898-1060284298-12136" set "SAMACCOUNTNAME=malter"
@@ -164,8 +160,8 @@ redirectwebauthn:i:1
 remoteapplicationcmdline:s:
 remoteapplicationicon:s:
 remoteapplicationmode:i:1
-remoteapplicationname:s:run_airquest.cmd
-remoteapplicationprogram:s:||run_airquest
+remoteapplicationname:s:runaq_explorer.cmd
+remoteapplicationprogram:s:||runaq_explorer
 remoteappmousemoveinject:i:1
 screen mode id:i:2
 server port:i:3389
